@@ -63,7 +63,7 @@ const Welcome = () => {
                         </div>
                         <div className={commonStyles}>Low Fees</div>
                         <div className={`rounded-br-2xl ${commonStyles}`}>
-                            Blockcahin
+                            Blockchain
                         </div>
                     </div>
                 </div>
