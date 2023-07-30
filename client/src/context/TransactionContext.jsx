@@ -11,13 +11,9 @@ const { ethereum } = window;
 const getEthereumContract = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)    
     const signer = provider.getSigner();
-    const transactionContract = new ethers.Contract(contractAddress, contractABI, signer);
-    
-    console.log({
-        provider,
-        signer,
-        transactionContract
-    });
+    const transactionsContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+    return transactionsContract;
 }
 
 export const TransactionProvider = ({ children }) => {
@@ -62,6 +58,7 @@ export const TransactionProvider = ({ children }) => {
             const {addressTo, amount, message, keyword} = formData;
             console.log(addressTo, amount, message, keyword);
             const transactionContract = getEthereumContract();
+            console.log(transactionContract)
             const parsedAmount = ethers.utils.parseEther(amount)
 
             await ethereum.request({
@@ -74,6 +71,7 @@ export const TransactionProvider = ({ children }) => {
                 }]
             })
 
+
             const transactionHash = await transactionContract.addToBlockchain(addressTo, parsedAmount, message, keyword);
             
             
@@ -83,7 +81,7 @@ export const TransactionProvider = ({ children }) => {
             setIsLoading(false);
             console.log(`Success - ${transactionHash.hash}`);
 
-            const transactionCount = await transactionContract.getTransactionCount;
+            const transactionCount = await transactionContract.getTransactionCount();
             setTransactionCount(transactionCount.toNumber());
 
 
